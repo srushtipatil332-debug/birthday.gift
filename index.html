@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday 🎂</title>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4, #fad0c4);
+      overflow-x: hidden;
+      text-align: center;
+      color: white;
+    }
+
+    .container {
+      padding: 20px;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-top: 40px;
+      animation: glow 2s infinite alternate;
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 10px #fff; }
+      to { text-shadow: 0 0 20px #ff4081, 0 0 30px #ff4081; }
+    }
+
+    p {
+      font-size: 1.1rem;
+      margin: 15px;
+      line-height: 1.6;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.2);
+      border-radius: 20px;
+      padding: 15px;
+      margin: 15px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+      transition: transform 0.3s;
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+    }
+
+    button {
+      background: #ff4081;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 30px;
+      color: white;
+      font-size: 1rem;
+      margin-top: 20px;
+      cursor: pointer;
+      box-shadow: 0 0 10px #ff4081;
+    }
+
+    button:hover {
+      background: #e73370;
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+    }
+
+    @media (max-width: 600px) {
+      h1 { font-size: 2rem; }
+      p { font-size: 1rem; }
+    }
+  </style>
+</head>
+
+<body>
+
+<canvas id="confetti"></canvas>
+
+<div class="container">
+  <h1>🎉 Happy Birthday 🎂</h1>
+
+  <p>
+    Today isn’t just a date…  
+    it’s the universe quietly celebrating *you* ✨
+  </p>
+
+  <div class="card">
+    🌟 You’re not getting older…  
+    you’re unlocking new levels like a legendary character.
+  </div>
+
+  <div class="card">
+    💫 Somewhere between your smile and your chaos,  
+    the world found something beautiful.
+  </div>
+
+  <div class="card">
+    🎈 If happiness had a face today,  
+    it would probably look a lot like yours.
+  </div>
+
+  <div class="card">
+    🚀 This year? Bigger dreams, louder laughs,  
+    and zero permission needed to shine.
+  </div>
+
+  <button onclick="startConfetti()">Celebrate 🎉</button>
+</div>
+
+<script>
+  const canvas = document.getElementById("confetti");
+  const ctx = canvas.getContext("2d");
+
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  let confetti = [];
+
+  function createConfetti() {
+    for (let i = 0; i < 150; i++) {
+      confetti.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 6 + 2,
+        d: Math.random() * 100,
+        color: "hsl(" + Math.random() * 360 + ",100%,50%)",
+        tilt: Math.random() * 10 - 10
+      });
+    }
+  }
+
+  function drawConfetti() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    confetti.forEach((c, i) => {
+      ctx.beginPath();
+      ctx.fillStyle = c.color;
+      ctx.arc(c.x, c.y, c.r, 0, Math.PI * 2);
+      ctx.fill();
+
+      c.y += Math.cos(c.d) + 2;
+      c.x += Math.sin(c.d);
+
+      if (c.y > canvas.height) {
+        confetti[i].y = -10;
+        confetti[i].x = Math.random() * canvas.width;
+      }
+    });
+  }
+
+  function startConfetti() {
+    createConfetti();
+    setInterval(drawConfetti, 20);
+  }
+
+  window.addEventListener("resize", () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  });
+</script>
+
+</body>
+</html>
